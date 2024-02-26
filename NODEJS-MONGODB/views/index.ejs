@@ -1,0 +1,62 @@
+<%- include('layout/header')  %>
+<div class="container">
+    <div class="row my-4">
+        <div class="col-lg-12">
+        <div class="table-responsive">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr class="bg-primary table-dark ">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>E-mail</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <% let contador = 1; %>
+                <%users.map(element=>{ %>
+
+                        <tbody>
+                            <tr>
+                                <td><%=  contador%></td>
+                                <td><%= element.name %></td>
+                                <td><%= element.email %></td>
+                                <td><%= element.phone %></td>
+                                <td>
+                                    <% let userId = element._id; %>
+                                    <div class="container__edittrash">
+                                    <form action="<%='/api/update/form/' + userId %>" method="get">
+                                    <button class="text-success">
+                                        <i class="fas fa-edit fa-lg mx-1 btn-1">
+                                        </i></button>
+                                    </form>
+                                    <form  action="<%='/api/user/' + userId %>" method="post">
+                                    <button  class="text-danger" >
+                                            <i class="fas fa-trash fa-lg mx-1">
+                                    </i></button>
+                                </div>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <% contador ++ %>
+                <% }) %>
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Cambiar la ruta después de que la página cargue
+    if (!localStorage.getItem('rutaCambiada')) {
+        // Cambiar la ruta si la variable de control no existe
+        window.onload = function() {
+            // Podemos ajustar la URL según tus necesidades
+            window.location.href = '/api/home';
+
+            // Establecer la variable de control para indicar que la operación ya se ejecutó
+            localStorage.setItem('rutaCambiada', 'true');
+        };
+    }
+    </script>
+<%- include('layout/footer')  %>
